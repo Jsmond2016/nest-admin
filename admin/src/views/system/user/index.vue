@@ -380,7 +380,7 @@ export default {
 		this.getList();
 		this.getDeptTree();
 		this.getConfigKey('sys.user.initPassword').then((response) => {
-			this.initPassword = response.data.configValue;
+			this.initPassword = response.data;
 		});
 	},
 	methods: {
@@ -389,7 +389,7 @@ export default {
 			this.loading = true;
 			listUser(this.addDateRange(this.queryParams, this.dateRange)).then((response) => {
 				this.userList = response.data.list;
-				this.total = response.total;
+				this.total = response.data.total;
 				this.loading = false;
 			});
 		},

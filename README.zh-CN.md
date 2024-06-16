@@ -117,4 +117,4 @@ $ node ./scripts/startAll.js
 
 |                                 微信二维码                                 |
 | :------------------------------------------------------------------------: |
-| <img src="https://fast.dooring.cn/static/nest-admin-wechat.jpg" width=170> |
+| <img src="https://fast.dooring.cn/static/nest-admin-wechat-new.jpg" width=170> |

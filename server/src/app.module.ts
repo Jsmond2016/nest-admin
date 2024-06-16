@@ -1,11 +1,14 @@
 import { Module, Global } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { RedisClientOptions } from '@liaoliaots/nestjs-redis';
 import configuration from './config/index';
 import { HttpModule } from '@nestjs/axios';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from 'src/common/guards/auth.guard';
+import { PermissionGuard } from 'src/common/guards/permission.guard';
 import { RolesGuard } from './common/guards/roles.guard';
+
 import { AuthModule } from './module/system/auth/auth.module';
 import { UserModule } from './module/system/user/user.module';
 import { ToolModule } from './module/system/tool/tool.module';
@@ -47,15 +50,25 @@ import { UploadModule } from './module/upload/upload.module';
           keepConnectionAlive: true,
           timezone: '+08:00',
           ...config.get('db.mysql'),
-          // cache: {
-          //   type: 'ioredis',
-          //   ...config.get('redis'),
-          //   alwaysEnabled: true,
-          //   duration: 3 * 1000, // 缓存3s
-          // },
         } as TypeOrmModuleOptions;
       },
     }),
+    // redis
+    RedisModule.forRootAsync(
+      {
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (config: ConfigService) => {
+          return {
+            closeClient: true,
+            readyLog: true,
+            errorLog: true,
+            config: config.get<RedisClientOptions>('redis'),
+          };
+        },
+      },
+      true,
+    ),
     HttpModule,
     AuthModule,
     UserModule,
@@ -68,7 +81,6 @@ import { UploadModule } from './module/upload/upload.module';
     SysConfigModule,
     NoticeModule,
     MainModule,
-    RedisModule,
     CacheModule,
     LoginlogModule,
     OperlogModule,
@@ -85,6 +97,10 @@ import { UploadModule } from './module/upload/upload.module';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PermissionGuard,
     },
   ],
 })
