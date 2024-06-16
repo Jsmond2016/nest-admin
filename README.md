@@ -12,7 +12,7 @@ Language : 🇺🇸 | [🇨🇳](./README.zh-CN.md)
 
 <div align="center">
 
-An out-of-box UI solution for enterprise applications as a React boilerplate.
+A out of the box backend management system based on the latest version of Nestjs
 
 ![](./image.png)
 
@@ -117,6 +117,6 @@ Any type of contribution is welcome, here are some examples of how you may contr
 
 wechat: `taozhi1010`
 
-|                         WeChat communication group                         |
-| :------------------------------------------------------------------------: |
-| <img src="https://fast.dooring.cn/static/nest-admin-wechat.jpg" width=170> |
+|                           WeChat communication group                           |
+| :----------------------------------------------------------------------------: |
+| <img src="https://fast.dooring.cn/static/nest-admin-wechat-new.jpg" width=170> |
